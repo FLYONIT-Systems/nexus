@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "MCPHub 控制面板",
+    "title": "Nexus 控制面板",
     "error": "错误",
     "closeButton": "关闭",
     "noServers": "没有可用的 MCP 服务器",
@@ -10,13 +10,13 @@
     "changePassword": "修改密码",
     "toggleSidebar": "切换侧边栏",
     "welcomeUser": "欢迎, {{username}}",
-    "name": "MCPHub",
+    "name": "Nexus",
     "embeddingSyncProgress": "正在为 {{serverName}} 创建嵌入",
     "embeddingSyncProgressAriaLabel": "正在为 {{serverName}} 创建嵌入：已完成 {{current}}/{{total}}"
   },
   "about": {
     "title": "关于",
-    "versionInfo": "MCPHub 版本: {{version}}",
+    "versionInfo": "Nexus 版本: {{version}}",
     "newVersion": "有新版本可用！",
     "currentVersion": "当前版本",
     "newVersionAvailable": "新版本 {{version}} 已发布",
@@ -42,7 +42,7 @@
     "label": "赞助",
     "title": "支持项目",
     "rewardAlt": "赞赏码",
-    "supportMessage": "通过捐赠支持 MCPHub 的开发！",
+    "supportMessage": "通过捐赠支持 Nexus 的开发！",
     "supportButton": "在 Ko-fi 上支持"
   },
   "wechat": {
@@ -64,7 +64,7 @@
   },
   "auth": {
     "login": "登录",
-    "loginTitle": "登录 MCPHub",
+    "loginTitle": "登录 Nexus",
     "slogan": "开源、自托管的 MCP 网关与控制平面",
     "subtitle": "通过统一端点连接、组织、控制和运行 Model Context Protocol 服务器。",
     "username": "用户名",
@@ -241,7 +241,7 @@
       "securityNotDeclared": "该规范未声明任何安全方案。",
       "securityPrefillNotice": "该规范声明了 {{summary}}。安全设置已自动预填——请在首次调用前填入你的凭据值。",
       "securityMismatchWarning": "该规范声明的是 {{summary}}，但当前服务器配置为 {{configured}}。这可能导致静默返回 401。",
-      "securityUnsupportedNotice": "该规范声明了 {{summary}}，但 MCPHub 无法表示该方案（{{reason}}）。请手动配置认证。",
+      "securityUnsupportedNotice": "该规范声明了 {{summary}}，但 Nexus 无法表示该方案（{{reason}}）。请手动配置认证。",
       "apiKeyConfig": "API 密钥配置",
       "apiKeyName": "请求头/参数名称",
       "apiKeyIn": "位置",
@@ -297,7 +297,7 @@
     "oauthRequired": "需要OAuth授权",
     "clickToAuthorize": "点击进行OAuth授权",
     "oauthWindowOpened": "OAuth授权窗口已打开，请完成授权。",
-    "oauthClientIdHint": "该服务器配置了预设的 OAuth 客户端 ID。如果授权因“invalid redirect_uri”失败，请删除 clientId，让 MCPHub 自动注册自己的 OAuth 客户端。"
+    "oauthClientIdHint": "该服务器配置了预设的 OAuth 客户端 ID。如果授权因“invalid redirect_uri”失败，请删除 clientId，让 Nexus 自动注册自己的 OAuth 客户端。"
   },
   "errors": {
     "general": "发生错误",
@@ -371,7 +371,7 @@
     "title": "复制 MCP 配置",
     "description": "选择你的客户端，复制可直接粘贴的 {{name}} 配置。",
     "menuItem": "复制 MCP 配置",
-    "tokenPrompt": "MCPHub 访问令牌",
+    "tokenPrompt": "Nexus 访问令牌",
     "configBlock": "配置内容",
     "commandBlock": "命令行",
     "copied": "已复制",
@@ -614,7 +614,7 @@
   },
   "oauthServer": {
     "authorizeTitle": "授权应用",
-    "authorizeSubtitle": "允许此应用访问您的 MCPHub 账号。",
+    "authorizeSubtitle": "允许此应用访问您的 Nexus 账号。",
     "buttons": {
       "approve": "允许访问",
       "deny": "拒绝",
@@ -977,7 +977,7 @@
     "mcpRouterRefererPlaceholder": "https://www.mcphub.app",
     "mcpRouterTitle": "标题",
     "mcpRouterTitleDescription": "MCPRouter API 请求的标题头",
-    "mcpRouterTitlePlaceholder": "MCPHub",
+    "mcpRouterTitlePlaceholder": "Nexus",
     "mcpRouterBaseUrl": "基础地址",
     "mcpRouterBaseUrlDescription": "MCPRouter API 的基础地址",
     "mcpRouterBaseUrlPlaceholder": "https://api.mcprouter.to/v1",
@@ -998,7 +998,7 @@
     "exportSuccess": "配置导出成功",
     "exportError": "获取配置失败",
     "enableOauthServer": "启用 OAuth 服务器",
-    "enableOauthServerDescription": "允许 MCPHub 作为 OAuth 2.0 授权服务器向外部客户端签发令牌",
+    "enableOauthServerDescription": "允许 Nexus 作为 OAuth 2.0 授权服务器向外部客户端签发令牌",
     "requireClientSecret": "需要客户端密钥",
     "requireClientSecretDescription": "开启后，保密客户端必须携带 client secret（如需仅使用 PKCE 的公共客户端可关闭）",
     "requireState": "要求 state 参数",

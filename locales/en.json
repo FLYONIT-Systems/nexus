@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "MCPHub Dashboard",
+    "title": "Nexus Dashboard",
     "error": "Error",
     "closeButton": "Close",
     "noServers": "No MCP servers available",
@@ -10,13 +10,13 @@
     "changePassword": "Change Password",
     "toggleSidebar": "Toggle Sidebar",
     "welcomeUser": "Welcome, {{username}}",
-    "name": "MCPHub",
+    "name": "Nexus",
     "embeddingSyncProgress": "Embeddings for {{serverName}}",
     "embeddingSyncProgressAriaLabel": "Creating embeddings for {{serverName}}: {{current}} of {{total}} completed"
   },
   "about": {
     "title": "About",
-    "versionInfo": "MCPHub Version: {{version}}",
+    "versionInfo": "Nexus Version: {{version}}",
     "newVersion": "New version available!",
     "currentVersion": "Current version",
     "newVersionAvailable": "New version {{version}} is available",
@@ -42,7 +42,7 @@
     "label": "Sponsor",
     "title": "Support the Project",
     "rewardAlt": "Reward QR Code",
-    "supportMessage": "Support the development of MCPHub by buying me a coffee!",
+    "supportMessage": "Support the development of Nexus by buying me a coffee!",
     "supportButton": "Support on Ko-fi"
   },
   "wechat": {
@@ -64,7 +64,7 @@
   },
   "auth": {
     "login": "Login",
-    "loginTitle": "Login to MCPHub",
+    "loginTitle": "Login to Nexus",
     "slogan": "Open-source, self-hosted MCP gateway and control plane",
     "subtitle": "Connect, organize, control, and operate Model Context Protocol servers through unified endpoints.",
     "username": "Username",
@@ -241,7 +241,7 @@
       "securityNotDeclared": "This spec does not declare a security scheme.",
       "securityPrefillNotice": "This spec declares {{summary}}. Security settings were pre-filled — add your credential value before the first call.",
       "securityMismatchWarning": "The spec declares {{summary}}, but this server is configured as {{configured}}. This can cause silent 401 responses.",
-      "securityUnsupportedNotice": "This spec declares {{summary}}, which MCPHub cannot represent ({{reason}}). Configure authentication manually.",
+      "securityUnsupportedNotice": "This spec declares {{summary}}, which Nexus cannot represent ({{reason}}). Configure authentication manually.",
       "apiKeyConfig": "API Key Configuration",
       "apiKeyName": "Header/Parameter Name",
       "apiKeyIn": "Location",
@@ -297,7 +297,7 @@
     "oauthRequired": "OAuth Required",
     "clickToAuthorize": "Click to authorize with OAuth",
     "oauthWindowOpened": "OAuth authorization window opened. Please complete the authorization.",
-    "oauthClientIdHint": "This server has a preconfigured OAuth client ID. If authorization fails with \"invalid redirect_uri\", remove the clientId so MCPHub can register its own OAuth client automatically."
+    "oauthClientIdHint": "This server has a preconfigured OAuth client ID. If authorization fails with \"invalid redirect_uri\", remove the clientId so Nexus can register its own OAuth client automatically."
   },
   "errors": {
     "general": "Something went wrong",
@@ -369,7 +369,7 @@
     "title": "Copy MCP configuration",
     "description": "Pick your client to copy a ready-to-paste configuration for {{name}}.",
     "menuItem": "Copy MCP config",
-    "tokenPrompt": "MCPHub access token",
+    "tokenPrompt": "Nexus access token",
     "configBlock": "Configuration",
     "commandBlock": "CLI command",
     "copied": "Copied",
@@ -612,7 +612,7 @@
   },
   "oauthServer": {
     "authorizeTitle": "Authorize Application",
-    "authorizeSubtitle": "Allow this application to access your MCPHub account.",
+    "authorizeSubtitle": "Allow this application to access your Nexus account.",
     "buttons": {
       "approve": "Allow access",
       "deny": "Deny",
@@ -974,7 +974,7 @@
     "mcpRouterRefererPlaceholder": "https://www.mcphub.app",
     "mcpRouterTitle": "Title",
     "mcpRouterTitleDescription": "Title header for MCPRouter API requests",
-    "mcpRouterTitlePlaceholder": "MCPHub",
+    "mcpRouterTitlePlaceholder": "Nexus",
     "mcpRouterBaseUrl": "Base URL",
     "mcpRouterBaseUrlDescription": "Base URL for MCPRouter API",
     "mcpRouterBaseUrlPlaceholder": "https://api.mcprouter.to/v1",
@@ -995,7 +995,7 @@
     "exportSuccess": "Settings exported successfully",
     "exportError": "Failed to fetch settings",
     "enableOauthServer": "Enable OAuth Server",
-    "enableOauthServerDescription": "Allow MCPHub to issue OAuth tokens for external clients",
+    "enableOauthServerDescription": "Allow Nexus to issue OAuth tokens for external clients",
     "requireClientSecret": "Require Client Secret",
     "requireClientSecretDescription": "When enabled, confidential clients must present a client secret (disable for PKCE-only clients)",
     "requireState": "Require State Parameter",

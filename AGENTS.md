@@ -1,4 +1,4 @@
-# MCPHub — Agent Guide
+# Nexus — Agent Guide
 
 MCPHub (`@samanhappy/mcphub`) is a TypeScript/Node.js ESM hub that aggregates MCP servers behind a single HTTP service with a React/Vite dashboard.
 

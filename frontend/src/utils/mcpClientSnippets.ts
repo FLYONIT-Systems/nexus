@@ -1,7 +1,7 @@
 /**
  * Per-client MCP configuration presets for the copy actions (#1165).
  *
- * MCPHub hands out HTTP endpoints, so every preset describes the same target -
+ * Nexus hands out HTTP endpoints, so every preset describes the same target -
  * a name, an optional URL/headers pair (HTTP) or command/args/env triple
  * (stdio) - in the shape the selected client expects. Eleven of the fourteen
  * presets were verified against the upstream sources below (URLs re-checked
@@ -128,7 +128,7 @@ export interface ClientSnippetOptions {
   tokenPromptDescription?: string;
 }
 
-/** Placeholder MCPHub uses for snippets that need a token pasted in by hand. */
+/** Placeholder Nexus uses for snippets that need a token pasted in by hand. */
 export const ACCESS_TOKEN_PLACEHOLDER = '<your-access-token>';
 const TOKEN_INPUT_ID = 'mcphub-token';
 
@@ -245,7 +245,7 @@ const vscodeSnippet = (target: ClientSnippetTarget, options: ClientSnippetOption
               {
                 id: TOKEN_INPUT_ID,
                 type: 'promptString',
-                description: options.tokenPromptDescription ?? 'MCPHub access token',
+                description: options.tokenPromptDescription ?? 'Nexus access token',
                 password: true,
               },
             ],
@@ -449,7 +449,7 @@ const asStringArray = (value: unknown): string[] | undefined => {
 
 /**
  * Narrow a stored server configuration (the `mcp-settings/export` payload
- * carries MCPHub's internal fields too) down to what a client snippet needs.
+ * carries Nexus's internal fields too) down to what a client snippet needs.
  */
 export const toClientSnippetTarget = (
   name: string,

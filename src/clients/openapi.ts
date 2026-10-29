@@ -42,7 +42,7 @@ export interface OpenAPIToolInfo {
 
 type OpenAPIOAuth2Config = NonNullable<OpenAPISecurityConfig['oauth2']>;
 
-// Result of mapping one declared OpenAPI security scheme onto MCPHub's model
+// Result of mapping one declared OpenAPI security scheme onto Nexus's model
 // (#1077). `ok: false` carries a human reason so the form can explain why the
 // spec's auth cannot be represented rather than silently ignoring it.
 interface MappedSecurityScheme {
@@ -722,7 +722,7 @@ export class OpenAPIClient {
         // operations visibly in the description instead (#1078).
         if (declaredRequestBody && !requestBodySelection) {
           const declaredTypes = Object.keys(declaredRequestBody.content ?? {}).join(', ');
-          description += ` [Unsupported request body content type(s): ${declaredTypes} — only application/json, application/x-www-form-urlencoded and multipart/form-data can be sent by MCPHub.]`;
+          description += ` [Unsupported request body content type(s): ${declaredTypes} — only application/json, application/x-www-form-urlencoded and multipart/form-data can be sent by Nexus.]`;
         }
 
         const tool: OpenAPIToolInfo = {
@@ -949,7 +949,7 @@ export class OpenAPIClient {
         if (!selection) {
           const declaredTypes = Object.keys(tool.requestBody.content ?? {}).join(', ');
           throw new Error(
-            `Tool '${toolName}' declares a request body with unsupported content type(s): ${declaredTypes}. Only application/json, application/x-www-form-urlencoded and multipart/form-data can be sent by MCPHub.`,
+            `Tool '${toolName}' declares a request body with unsupported content type(s): ${declaredTypes}. Only application/json, application/x-www-form-urlencoded and multipart/form-data can be sent by Nexus.`,
           );
         }
 
@@ -962,7 +962,7 @@ export class OpenAPIClient {
             requestBodyContentType = 'application/x-www-form-urlencoded';
             break;
           case 'multipart/form-data': {
-            const boundary = `----MCPHubBoundary${randomUUID().replace(/-/g, '')}`;
+            const boundary = `----NexusBoundary${randomUUID().replace(/-/g, '')}`;
             // The spec is dereferenced before tools are built, so the schema
             // cannot still be a $ref here.
             const bodySchema = selection.mediaType.schema as OpenAPIV3.SchemaObject | undefined;
@@ -1139,14 +1139,14 @@ export class OpenAPIClient {
   // ── Declared-security resolution (#1077) ─────────────────────────────────
   //
   // The import path reads the effective `security` requirement the spec
-  // declares and maps it onto MCPHub's OpenAPISecurityConfig so the form can
+  // declares and maps it onto Nexus's OpenAPISecurityConfig so the form can
   // prefill type/scheme/name fields. Only structural fields are ever produced
   // — a spec cannot contain the secret, so value / credentials / token stay
   // empty for the user.
 
   /**
    * Resolve the effective security requirement the (already parsed) spec
-   * declares and map it onto MCPHub's security model for form prefill.
+   * declares and map it onto Nexus's security model for form prefill.
    *
    * OpenAPI 3.x rules applied here:
    *  - an operation-level `security` overrides the root-level one for that
@@ -1156,7 +1156,7 @@ export class OpenAPIClient {
    *    `components.securitySchemes`); a single scheme may be repeated in an
    *    AND-list with its required scopes.
    *
-   * The first requirement whose scheme maps onto MCPHub's model (apiKey,
+   * The first requirement whose scheme maps onto Nexus's model (apiKey,
    * http/basic|bearer, oauth2, openIdConnect) is returned as `prefill`.
    */
   getDeclaredSecurity(): OpenAPIDeclaredSecurity {
@@ -1253,7 +1253,7 @@ export class OpenAPIClient {
         summary: 'unknown security scheme',
         alternatives: requirement.length,
         requiresCredentials: false,
-        unsupportedReason: 'The spec declares a security scheme MCPHub cannot recognize.',
+        unsupportedReason: 'The spec declares a security scheme Nexus cannot recognize.',
       }
     );
   }
@@ -1284,13 +1284,13 @@ export class OpenAPIClient {
             summary: 'HTTP basic',
           };
         }
-        // MCPHub's form can select digest but applySecurityToClient() never
+        // Nexus's form can select digest but applySecurityToClient() never
         // emits a
         // Digest header, so declaring it as prefilled would silently mislead.
         return {
           ok: false,
           summary: `HTTP ${scheme.scheme}`,
-          unsupportedReason: `HTTP scheme '${scheme.scheme}' cannot be sent by MCPHub.`,
+          unsupportedReason: `HTTP scheme '${scheme.scheme}' cannot be sent by Nexus.`,
         };
 
       case 'apiKey': {
@@ -1306,12 +1306,12 @@ export class OpenAPIClient {
         return {
           ok: false,
           summary: `API key in '${location}'`,
-          unsupportedReason: `API key location '${location}' is not supported by MCPHub.`,
+          unsupportedReason: `API key location '${location}' is not supported by Nexus.`,
         };
       }
 
       case 'oauth2': {
-        // Only flows with a token endpoint are actionable for MCPHub's
+        // Only flows with a token endpoint are actionable for Nexus's
         // client-credentials token fetch; prefill it when the spec provides it.
         const tokenUrl =
           scheme.flows?.clientCredentials?.tokenUrl ||
@@ -1338,7 +1338,7 @@ export class OpenAPIClient {
         return {
           ok: false,
           summary: `security scheme '${schemeName}'`,
-          unsupportedReason: `Security scheme type '${(scheme as { type: string }).type}' is not supported by MCPHub.`,
+          unsupportedReason: `Security scheme type '${(scheme as { type: string }).type}' is not supported by Nexus.`,
         };
     }
   }

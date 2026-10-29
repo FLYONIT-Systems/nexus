@@ -112,7 +112,7 @@ docker run -p 3000:3000 -v ./data:/app/data -e ADMIN_PASSWORD=your-secure-passwo
 
 > **提示：** 首次登录后请及时修改管理员密码以确保安全。
 
-> **无界面模式：** 设置 `DISABLE_WEB=true` 后，MCPHub 将不再提供内置控制台 UI，只保留后端/API 与 MCP 端点。适合直接通过 `mcp_settings.json` 管理服务的场景。
+> **无界面模式：** 设置 `DISABLE_WEB=true` 后，Nexus 将不再提供内置控制台 UI，只保留后端/API 与 MCP 端点。适合直接通过 `mcp_settings.json` 管理服务的场景。
 
 ### 连接 AI 客户端
 
@@ -167,7 +167,7 @@ pnpm dev
 
 ## 🏢 生产支持
 
-正在生产环境使用 MCPHub？
+正在生产环境使用 Nexus？
 
 可以直接与维护者合作，解决生产架构、OAuth/OIDC、身份与访问控制、
 凭据管理、审计、Kubernetes 和高可用准备等问题。

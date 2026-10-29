@@ -88,7 +88,7 @@ if (isCliCommand) {
 } else {
   // Legacy: server bootstrap. Existing console.log banner preserved here so it
   // never leaks into CLI subcommand output.
-  console.log('📋 MCPHub CLI');
+  console.log('📋 Nexus CLI');
   console.log(`📁 CLI script location: ${__dirname}`);
   console.log(`📦 Using package root: ${projectRoot}`);
 
@@ -102,11 +102,11 @@ if (isCliCommand) {
     console.log('⚠️ Frontend distribution not found at', frontendDistPath);
   }
 
-  console.log('🚀 Starting MCPHub server...');
+  console.log('🚀 Starting Nexus server...');
   const entryPath = path.join(projectRoot, 'dist', 'index.js');
   const entryUrl = pathToFileURL(entryPath).href;
   import(entryUrl).catch((err) => {
-    console.error('Failed to start MCPHub:', err);
+    console.error('Failed to start Nexus:', err);
     process.exit(1);
   });
 }

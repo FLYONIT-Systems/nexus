@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Tableau de bord MCPHub",
+    "title": "Tableau de bord Nexus",
     "error": "Erreur",
     "closeButton": "Fermer",
     "noServers": "Aucun serveur MCP disponible",
@@ -10,13 +10,13 @@
     "changePassword": "Changer le mot de passe",
     "toggleSidebar": "Basculer la barre latérale",
     "welcomeUser": "Bienvenue, {{username}}",
-    "name": "MCPHub",
+    "name": "Nexus",
     "embeddingSyncProgress": "Embeddings pour {{serverName}}",
     "embeddingSyncProgressAriaLabel": "Création des embeddings pour {{serverName}} : {{current}} sur {{total}} terminés"
   },
   "about": {
     "title": "À propos",
-    "versionInfo": "Version MCPHub : {{version}}",
+    "versionInfo": "Version Nexus : {{version}}",
     "newVersion": "Nouvelle version disponible !",
     "currentVersion": "Version actuelle",
     "newVersionAvailable": "La nouvelle version {{version}} est disponible",
@@ -42,7 +42,7 @@
     "label": "Sponsor",
     "title": "Soutenir le projet",
     "rewardAlt": "QR Code de récompense",
-    "supportMessage": "Soutenez le développement de MCPHub en m'offrant un café !",
+    "supportMessage": "Soutenez le développement de Nexus en m'offrant un café !",
     "supportButton": "Soutenir sur Ko-fi"
   },
   "wechat": {
@@ -64,7 +64,7 @@
   },
   "auth": {
     "login": "Connexion",
-    "loginTitle": "Se connecter à MCPHub",
+    "loginTitle": "Se connecter à Nexus",
     "slogan": "Passerelle et plan de contrôle MCP open source et auto-hébergés",
     "subtitle": "Connectez, organisez, contrôlez et exploitez vos serveurs Model Context Protocol via des points de terminaison unifiés.",
     "username": "Nom d'utilisateur",
@@ -241,7 +241,7 @@
       "securityNotDeclared": "Ce spec ne déclare aucun schéma de sécurité.",
       "securityPrefillNotice": "Ce spec déclare {{summary}}. Les paramètres de sécurité ont été pré-remplis — ajoutez votre valeur d’identification avant le premier appel.",
       "securityMismatchWarning": "Le spec déclare {{summary}}, mais ce serveur est configuré en {{configured}}. Cela peut provoquer des réponses 401 silencieuses.",
-      "securityUnsupportedNotice": "Ce spec déclare {{summary}}, que MCPHub ne peut pas représenter ({{reason}}). Configurez l’authentification manuellement.",
+      "securityUnsupportedNotice": "Ce spec déclare {{summary}}, que Nexus ne peut pas représenter ({{reason}}). Configurez l’authentification manuellement.",
       "apiKeyConfig": "Configuration de la clé API",
       "apiKeyName": "Nom de l'en-tête/paramètre",
       "apiKeyIn": "Emplacement",
@@ -297,7 +297,7 @@
     "oauthRequired": "OAuth requis",
     "clickToAuthorize": "Cliquez pour autoriser avec OAuth",
     "oauthWindowOpened": "Fenêtre d'autorisation OAuth ouverte. Veuillez compléter l'autorisation.",
-    "oauthClientIdHint": "Ce serveur possède un ID client OAuth préconfiguré. Si l'autorisation échoue avec « invalid redirect_uri », supprimez le clientId pour que MCPHub puisse enregistrer automatiquement son propre client OAuth."
+    "oauthClientIdHint": "Ce serveur possède un ID client OAuth préconfiguré. Si l'autorisation échoue avec « invalid redirect_uri », supprimez le clientId pour que Nexus puisse enregistrer automatiquement son propre client OAuth."
   },
   "errors": {
     "general": "Une erreur est survenue",
@@ -370,7 +370,7 @@
     "title": "Copier la configuration MCP",
     "description": "Choisissez votre client pour copier une configuration prête à coller pour {{name}}.",
     "menuItem": "Copier la config MCP",
-    "tokenPrompt": "Jeton d'accès MCPHub",
+    "tokenPrompt": "Jeton d'accès Nexus",
     "configBlock": "Configuration",
     "commandBlock": "Commande CLI",
     "copied": "Copié",
@@ -611,7 +611,7 @@
   },
   "oauthServer": {
     "authorizeTitle": "Autoriser l'application",
-    "authorizeSubtitle": "Autorisez cette application à accéder à votre compte MCPHub.",
+    "authorizeSubtitle": "Autorisez cette application à accéder à votre compte Nexus.",
     "buttons": {
       "approve": "Autoriser l'accès",
       "deny": "Refuser",
@@ -973,7 +973,7 @@
     "mcpRouterRefererPlaceholder": "https://www.mcphub.app",
     "mcpRouterTitle": "Titre",
     "mcpRouterTitleDescription": "En-tête Title pour les requêtes API MCPRouter",
-    "mcpRouterTitlePlaceholder": "MCPHub",
+    "mcpRouterTitlePlaceholder": "Nexus",
     "mcpRouterBaseUrl": "URL de base",
     "mcpRouterBaseUrlDescription": "URL de base pour l'API MCPRouter",
     "mcpRouterBaseUrlPlaceholder": "https://api.mcprouter.to/v1",
@@ -994,7 +994,7 @@
     "exportSuccess": "Paramètres exportés avec succès",
     "exportError": "Échec de la récupération des paramètres",
     "enableOauthServer": "Activer le serveur OAuth",
-    "enableOauthServerDescription": "Permet à MCPHub d'émettre des jetons OAuth pour les clients externes",
+    "enableOauthServerDescription": "Permet à Nexus d'émettre des jetons OAuth pour les clients externes",
     "requireClientSecret": "Exiger un secret client",
     "requireClientSecretDescription": "Lorsque activé, les clients confidentiels doivent présenter un client secret (désactivez-le pour les clients PKCE publics)",
     "requireState": "Exiger le paramètre state",

@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "MCPHub Kontrol Paneli",
+    "title": "Nexus Kontrol Paneli",
     "error": "Hata",
     "closeButton": "Kapat",
     "noServers": "Kullanılabilir MCP sunucusu yok",
@@ -10,13 +10,13 @@
     "changePassword": "Şifre Değiştir",
     "toggleSidebar": "Kenar Çubuğunu Aç/Kapat",
     "welcomeUser": "Hoş geldin, {{username}}",
-    "name": "MCPHub",
+    "name": "Nexus",
     "embeddingSyncProgress": "{{serverName}} için gömme oluşturuluyor",
     "embeddingSyncProgressAriaLabel": "{{serverName}} için gömme oluşturuluyor: {{total}} adımdan {{current}} tamamlandı"
   },
   "about": {
     "title": "Hakkında",
-    "versionInfo": "MCPHub Sürümü: {{version}}",
+    "versionInfo": "Nexus Sürümü: {{version}}",
     "newVersion": "Yeni sürüm mevcut!",
     "currentVersion": "Mevcut sürüm",
     "newVersionAvailable": "Yeni sürüm {{version}} mevcut",
@@ -42,7 +42,7 @@
     "label": "Sponsor",
     "title": "Projeyi Destekle",
     "rewardAlt": "Ödül QR Kodu",
-    "supportMessage": "Bana bir kahve ısmarlayarak MCPHub'ın geliştirilmesini destekleyin!",
+    "supportMessage": "Bana bir kahve ısmarlayarak Nexus'ın geliştirilmesini destekleyin!",
     "supportButton": "Ko-fi'de Destek Ol"
   },
   "wechat": {
@@ -64,7 +64,7 @@
   },
   "auth": {
     "login": "Giriş Yap",
-    "loginTitle": "MCPHub'a Giriş Yap",
+    "loginTitle": "Nexus'a Giriş Yap",
     "slogan": "Açık kaynaklı, kendi kendine barındırılan MCP ağ geçidi ve kontrol düzlemi",
     "subtitle": "Model Context Protocol sunucularını birleşik uç noktalar üzerinden bağlayın, düzenleyin, kontrol edin ve işletin.",
     "username": "Kullanıcı Adı",
@@ -241,7 +241,7 @@
       "securityNotDeclared": "Bu spec bir güvenlik şeması bildirmiyor.",
       "securityPrefillNotice": "Bu spec {{summary}} bildiriyor. Güvenlik ayarları önceden dolduruldu — ilk çağrıdan önce kimlik bilginizi ekleyin.",
       "securityMismatchWarning": "Spec {{summary}} bildiriyor, ancak bu sunucu {{configured}} olarak yapılandırılmış. Bu, sessiz 401 yanıtlarına neden olabilir.",
-      "securityUnsupportedNotice": "Bu spec {{summary}} bildiriyor; MCPHub bunu temsil edemiyor ({{reason}}). Kimlik doğrulamayı elle yapılandırın.",
+      "securityUnsupportedNotice": "Bu spec {{summary}} bildiriyor; Nexus bunu temsil edemiyor ({{reason}}). Kimlik doğrulamayı elle yapılandırın.",
       "apiKeyConfig": "API Anahtarı Yapılandırması",
       "apiKeyName": "Başlık/Parametre Adı",
       "apiKeyIn": "Konum",
@@ -297,7 +297,7 @@
     "oauthRequired": "OAuth Gerekli",
     "clickToAuthorize": "OAuth ile yetkilendirmek için tıklayın",
     "oauthWindowOpened": "OAuth yetkilendirme penceresi açıldı. Lütfen yetkilendirmeyi tamamlayın.",
-    "oauthClientIdHint": "Bu sunucuda önceden yapılandırılmış bir OAuth istemci kimliği var. Yetkilendirme \"invalid redirect_uri\" hatasıyla başarısız olursa, MCPHub'ın kendi OAuth istemcisini otomatik olarak kaydedebilmesi için clientId'yi kaldırın."
+    "oauthClientIdHint": "Bu sunucuda önceden yapılandırılmış bir OAuth istemci kimliği var. Yetkilendirme \"invalid redirect_uri\" hatasıyla başarısız olursa, Nexus'ın kendi OAuth istemcisini otomatik olarak kaydedebilmesi için clientId'yi kaldırın."
   },
   "errors": {
     "general": "Bir şeyler yanlış gitti",
@@ -370,7 +370,7 @@
     "title": "MCP yapılandırmasını kopyala",
     "description": "{{name}} için doğrudan yapıştırılabilir yapılandırmayı kopyalamak üzere istemcinizi seçin.",
     "menuItem": "MCP yapılandırmasını kopyala",
-    "tokenPrompt": "MCPHub erişim jetonu",
+    "tokenPrompt": "Nexus erişim jetonu",
     "configBlock": "Yapılandırma",
     "commandBlock": "CLI komutu",
     "copied": "Kopyalandı",
@@ -611,7 +611,7 @@
   },
   "oauthServer": {
     "authorizeTitle": "Uygulamayı Yetkilendir",
-    "authorizeSubtitle": "Bu uygulamanın MCPHub hesabınıza erişmesine izin verin.",
+    "authorizeSubtitle": "Bu uygulamanın Nexus hesabınıza erişmesine izin verin.",
     "buttons": {
       "approve": "Erişime izin ver",
       "deny": "Reddet",
@@ -972,7 +972,7 @@
     "mcpRouterRefererPlaceholder": "https://www.mcphub.app",
     "mcpRouterTitle": "Başlık",
     "mcpRouterTitleDescription": "MCPRouter API istekleri için Başlık başlığı",
-    "mcpRouterTitlePlaceholder": "MCPHub",
+    "mcpRouterTitlePlaceholder": "Nexus",
     "mcpRouterBaseUrl": "Temel URL",
     "mcpRouterBaseUrlDescription": "MCPRouter API için temel URL",
     "mcpRouterBaseUrlPlaceholder": "https://api.mcprouter.to/v1",
@@ -993,7 +993,7 @@
     "exportSuccess": "Ayarlar başarıyla dışa aktarıldı",
     "exportError": "Ayarlar getirilemedi",
     "enableOauthServer": "OAuth Sunucusunu Etkinleştir",
-    "enableOauthServerDescription": "MCPHub'ın harici istemciler için OAuth jetonları vermesine izin ver",
+    "enableOauthServerDescription": "Nexus'ın harici istemciler için OAuth jetonları vermesine izin ver",
     "requireClientSecret": "İstemci Sırrı Zorunlu",
     "requireClientSecretDescription": "Etkin olduğunda gizli istemciler client secret sunmalıdır (yalnızca PKCE kullanan istemciler için kapatabilirsiniz)",
     "requireState": "State parametresi zorunlu",

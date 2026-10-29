@@ -1,5 +1,7 @@
 # MCPHub
 
+A project by [FlyonIT](https://flyonit.com.au).
+
 > An open-source, self-hosted MCP gateway and control plane for connecting, controlling, and operating MCP servers.
 
 [![CI](https://github.com/samanhappy/mcphub/actions/workflows/ci.yml/badge.svg)](https://github.com/samanhappy/mcphub/actions/workflows/ci.yml)
@@ -113,7 +115,7 @@ docker run -p 3000:3000 -v ./data:/app/data -e ADMIN_PASSWORD=your-secure-passwo
 
 > **Tip:** Change the admin password after first login for security.
 
-> **Headless mode:** Set `DISABLE_WEB=true` to skip serving the bundled dashboard UI and run MCPHub with only the backend/API and MCP endpoints. This is useful when you want to manage servers directly from `mcp_settings.json`.
+> **Headless mode:** Set `DISABLE_WEB=true` to skip serving the bundled dashboard UI and run Nexus with only the backend/API and MCP endpoints. This is useful when you want to manage servers directly from `mcp_settings.json`.
 
 ### Connect AI Clients
 
@@ -169,7 +171,7 @@ Local development uses `admin` / `admin123` and stores its writable settings cop
 
 ## 🏢 Production Support
 
-Running MCPHub in production?
+Running Nexus in production?
 
 Work directly with the maintainer on production architecture, OAuth/OIDC,
 identity and access control, credential management, audit, Kubernetes, and HA readiness.

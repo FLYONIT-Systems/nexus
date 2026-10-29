@@ -1,6 +1,6 @@
-# MCPHub
+# Nexus
 
-Domain glossary for MCPHub — a hub that aggregates multiple MCP servers behind a single HTTP/SSE surface. This file is the canonical source for project-specific vocabulary; use these terms (and avoid the listed synonyms) in code, issues, and UI copy.
+Domain glossary for Nexus — a hub that aggregates multiple MCP servers behind a single HTTP/SSE surface. This file is the canonical source for project-specific vocabulary; use these terms (and avoid the listed synonyms) in code, issues, and UI copy.
 
 ## Language
 

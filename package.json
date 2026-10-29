@@ -45,7 +45,7 @@
     "mcp",
     "model context protocol"
   ],
-  "author": "",
+  "author": "FlyonIT <https://flyonit.com.au>",
   "license": "Apache-2.0",
   "dependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",

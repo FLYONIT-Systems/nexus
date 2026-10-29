@@ -58,7 +58,7 @@ export function selectRequestBodyContent(
 // cannot produce raw bytes. The rewrite must tolerate the circular references
 // SwaggerParser.dereference leaves behind (#959), hence the memoized walk.
 const MULTIPART_BINARY_FIELD_HINT =
-  'Provide base64-encoded file contents; MCPHub decodes them and uploads the bytes as this file part. An object {content, filename, contentType} may be supplied instead of a bare string to control the uploaded filename and MIME type.';
+  'Provide base64-encoded file contents; Nexus decodes them and uploads the bytes as this file part. An object {content, filename, contentType} may be supplied instead of a bare string to control the uploaded filename and MIME type.';
 
 export function makeMultipartBodySchemaModelFriendly(schema: unknown): unknown {
   const cache = new Map<object, unknown>();
