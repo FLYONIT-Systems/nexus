@@ -138,7 +138,7 @@ describe('buildClientSnippetBlocks', () => {
         {
           id: 'mcphub-token',
           type: 'promptString',
-          description: 'MCPHub access token',
+          description: 'Nexus access token',
           password: true,
         },
       ],
@@ -436,7 +436,7 @@ describe('buildClientSnippetBlocks', () => {
         {
           id: 'mcphub-token',
           type: 'promptString',
-          description: 'MCPHub access token',
+          description: 'Nexus access token',
           password: true,
         },
       ],
@@ -546,7 +546,7 @@ const PRESET_SHAPES: Record<ClientSnippetId, PresetShape> = {
         {
           id: 'mcphub-token',
           type: 'promptString',
-          description: 'MCPHub access token',
+          description: 'Nexus access token',
           password: true,
         },
       ],
@@ -563,7 +563,7 @@ const PRESET_SHAPES: Record<ClientSnippetId, PresetShape> = {
         {
           id: 'mcphub-token',
           type: 'promptString',
-          description: 'MCPHub access token',
+          description: 'Nexus access token',
           password: true,
         },
       ],
