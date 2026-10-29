@@ -39,3 +39,9 @@ temp-test-config/
 *.credentials.key.*.tmp
 
 .workbuddy
+
+# deploy-time secrets and artifacts (never commit)
+*.pem
+mcp_settings.json
+*.deploy.tar.gz
+*.dump

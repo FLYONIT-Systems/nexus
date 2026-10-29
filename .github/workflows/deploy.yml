@@ -1,0 +1,71 @@
+name: Deploy production
+
+# Runs only after CI succeeds on main. Builds a bundle from the exact commit CI tested,
+# copies it to the server over SSH, and runs deploy/deploy-nexus.sh there, which backs up
+# the database, installs beside the running version, health-checks, and rolls back on failure.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Package deploy bundle
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          echo "BUNDLE=nexus-${SHA}.deploy.tar.gz" >> "$GITHUB_ENV"
+          tar czf "nexus-${SHA}.deploy.tar.gz" \
+            dist frontend/dist locales bin patches servers.json \
+            package.json pnpm-lock.yaml pnpm-workspace.yaml .pnpmfile.cjs
+
+      - name: Prepare SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload bundle and deploy script
+        env:
+          TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
+        run: |
+          SSH="ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          $SSH "$TARGET" 'mkdir -p ~/nexus-deploy'
+          scp -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts \
+            "$BUNDLE" deploy/deploy-nexus.sh "$TARGET:~/nexus-deploy/"
+
+      - name: Run deploy on server
+        env:
+          TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
+          NEXUS_SERVICE: ${{ secrets.NEXUS_SERVICE }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes \
+            "$TARGET" "cd ~/nexus-deploy && AUTO_YES=1 bash deploy-nexus.sh '$BUNDLE' '$NEXUS_SERVICE'"
