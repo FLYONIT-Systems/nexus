@@ -30,12 +30,16 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Block secret-like files from being tracked
+      - name: Block secrets from being committed
+        # mcp_settings.json is tracked on purpose (empty template). Block secret
+        # material instead: key/env files, private key blocks, bcrypt hashes.
         run: |
-          if git ls-files | grep -E '(\.pem$|(^|/)\.env$|(^|/)mcp_settings\.json$)'; then
-            echo "Secret-like file is tracked in git. Remove it from the repo." >&2
-            exit 1
-          fi
+          set -u
+          bad=0
+          if git ls-files | grep -E '(\.pem$|(^|/)\.env$)'; then echo "Key or env file is tracked." >&2; bad=1; fi
+          if git grep -nIE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' ; then echo "Private key material found." >&2; bad=1; fi
+          if git grep -nIE -- '\$2[aby]\$[0-9]{2}\$[./A-Za-z0-9]{53}' ; then echo "bcrypt hash found in tracked file." >&2; bad=1; fi
+          exit $bad
 
       - run: pnpm lint
       - run: pnpm backend:build

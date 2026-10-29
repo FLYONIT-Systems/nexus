@@ -42,6 +42,5 @@ temp-test-config/
 
 # deploy-time secrets and artifacts (never commit)
 *.pem
-mcp_settings.json
 *.deploy.tar.gz
 *.dump
