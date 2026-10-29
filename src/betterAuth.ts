@@ -75,12 +75,13 @@ if (
           // present. Synthesize a display name from the remaining claims so
           // that sign-in succeeds for such issuers.
           mapProfileToUser: (profile) => ({
-            name:
+            name: String(
               profile.name ||
-              profile.nickname ||
-              profile.preferred_username ||
-              (typeof profile.email === 'string' && profile.email.split('@')[0]) ||
-              `oidc-${String(profile.id ?? profile.sub ?? '')}`,
+                profile.nickname ||
+                profile.preferred_username ||
+                (typeof profile.email === 'string' && profile.email.split('@')[0]) ||
+                `oidc-${String(profile.id ?? profile.sub ?? '')}`,
+            ),
           }),
         },
       ],
