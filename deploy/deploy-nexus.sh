@@ -3,6 +3,7 @@
 # CI sets AUTO_YES=1 to skip the confirmation prompt; the health check and rollback still run.
 # Run ON THE SERVER as a sudo-capable user (or root), with the tarball next to this script:
 #   bash deploy-nexus.sh [nexus-v1.1.3-deploy.tar.gz] [systemd-service-name]
+# The app directory may be readable only by root: all checks and copies there go through sudo.
 # Never prints DB credentials. Old app dir is kept as <dir>.bak-<timestamp>. nginx is only READ, never changed.
 set -euo pipefail
 
@@ -36,19 +37,21 @@ EXECSTART=$(prop ExecStart); SVC_USER=$(prop User); SVC_USER="${SVC_USER:-root}"
 EXEC_PATH=$(parse_exec_path "$EXECSTART"); ENTRY=$(parse_entry "$EXECSTART")
 APP_DIR=$(prop WorkingDirectory); APP_DIR="${APP_DIR#!}"; APP_DIR="${APP_DIR#-}"
 [ "$APP_DIR" = "~" ] && APP_DIR=""
-if [ -z "$APP_DIR" ] || [ ! -f "$APP_DIR/dist/index.js" ]; then
+if [ -z "$APP_DIR" ] || ! $SUDO test -f "$APP_DIR/dist/index.js"; then
   [ -n "$ENTRY" ] && { case "$ENTRY" in /*) ;; *) ENTRY="$APP_DIR/$ENTRY";; esac; APP_DIR=$(dirname "$(dirname "$ENTRY")"); }
 fi
-[ -f "$APP_DIR/dist/index.js" ] || die "couldn't find dist/index.js (WorkingDirectory='$(prop WorkingDirectory)'). Check: systemctl cat $SVC"
+$SUDO test -f "$APP_DIR/dist/index.js" || die "couldn't find dist/index.js (WorkingDirectory='$(prop WorkingDirectory)'). Check: systemctl cat $SVC"
 ENVTXT=$(prop Environment); ENVFILES=$( { parse_files "$(prop EnvironmentFiles)"; echo "$APP_DIR/.env"; } | awk 'NF && !s[$0]++')
 getvar(){ local v; v=$(envtxt_get "$ENVTXT" "$1")
   if [ -z "$v" ]; then local f; while read -r f; do [ -n "$f" ] || continue; v=$(envfile_get "$($SUDO cat "$f" 2>/dev/null || true)" "$1"); [ -n "$v" ] && break; done <<<"$ENVFILES"; fi
   printf '%s' "$v"; }
 PORT=$(getvar PORT); PORT="${PORT:-3000}"; DBURL=$(getvar DB_URL)
 if [ "$(basename "${EXEC_PATH:-x}")" = node ]; then NODE_BIN="$EXEC_PATH"; else NODE_BIN=$(command -v node || true); echo "note: service doesn't start 'node' directly; using $NODE_BIN for the version check/install"; fi
-[ -x "${NODE_BIN:-}" ] || die "no node binary found"; NODE_MAJOR=$("$NODE_BIN" -p 'process.versions.node.split(".")[0]')
+# The app dir (and sometimes the service's node) can be root-only: fall back to sudo when the deploy user cannot run it.
+NODE_RUN=""; if ! [ -x "${NODE_BIN:-}" ]; then $SUDO test -x "${NODE_BIN:-/nonexistent}" || die "no node binary found"; NODE_RUN="$SUDO"; fi
+NODE_MAJOR=$($NODE_RUN "$NODE_BIN" -p 'process.versions.node.split(".")[0]')
 [ "$NODE_MAJOR" -ge 20 ] || die "service Node is v$NODE_MAJOR; v1.1.x needs Node >= 20 (upgrade Node first)"
-echo "service: $SVC | user: $SVC_USER | dir: $APP_DIR | port: $PORT | node: $("$NODE_BIN" -v) | DB_URL: $([ -n "$DBURL" ] && echo found || echo 'not found')"
+echo "service: $SVC | user: $SVC_USER | dir: $APP_DIR | port: $PORT | node: $($NODE_RUN "$NODE_BIN" -v) | DB_URL: $([ -n "$DBURL" ] && echo found || echo 'not found')"
 
 say "2/9 Database backup (pg_dump, custom format)"
 DUMP=""
@@ -63,12 +66,12 @@ fi
 say "3/9 Unpack new version beside the old one"
 NEW="${APP_DIR}.new-$TS"; BAK="${APP_DIR}.bak-$TS"
 $SUDO mkdir -p "$NEW"; $SUDO chown "$(id -un)": "$NEW"; tar xzf "$TAR" -C "$NEW"
-while read -r f; do [ -e "$APP_DIR/$f" ] && $SUDO cp -a "$APP_DIR/$f" "$NEW/" && echo "carried over: $f"; done < <(printf '%s\n' .env mcp_settings.json data)
+while read -r f; do $SUDO test -e "$APP_DIR/$f" && $SUDO cp -a "$APP_DIR/$f" "$NEW/" && echo "carried over: $f"; done < <(printf '%s\n' .env mcp_settings.json data)
 
 say "4/9 Install dependencies (fresh, using the service's Node)"
 # NOTE: deliberately NOT --prod: upstream v1.1.3 imports 'zod' at runtime but lists it as a devDependency.
 LOG="/tmp/nexus-install-$TS.log"
-if ! ( cd "$NEW" && PATH="$(dirname "$NODE_BIN"):$PATH" npx -y pnpm@10.12.4 install --frozen-lockfile >"$LOG" 2>&1 ); then
+if ! ( cd "$NEW" && $NODE_RUN env PATH="$(dirname "$NODE_BIN"):$PATH" npx -y pnpm@10.12.4 install --frozen-lockfile >"$LOG" 2>&1 ); then
   echo "---- install output (last 30 lines) ----"; tail -30 "$LOG" | mask; echo "---- full log: $LOG ----"
   $SUDO rm -rf "$NEW"; die "dependency install failed; the running service was NOT touched and the side folder was removed"
 fi
