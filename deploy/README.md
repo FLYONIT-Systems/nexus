@@ -13,9 +13,9 @@ new version beside the running one, health-checks it, and rolls back automatical
 4. Keep `.env` and `mcp_settings.json` only in the live app directory. The deploy script copies them into each new release. They are never stored in git.
 
 ## GitHub setup (repo settings)
-Create an environment named `production` (Settings, Environments). No required reviewers, because deploys are automatic on push to main.
+Add these as repository secrets (Settings, Secrets and variables, Actions, Repository secrets).
+Environment secrets are not used: on GitHub Free they are ignored in private repositories, and jobs receive empty values.
 
-Environment secrets:
 - `DEPLOY_HOST`: server hostname or IP
 - `DEPLOY_USER`: deploy user name
 - `DEPLOY_SSH_KEY`: private key for the deploy user (generate a dedicated key, do not reuse a personal one)
@@ -25,8 +25,8 @@ Environment secrets:
 Do not put any of these in the repo.
 
 ## Flow of a deploy
-1. CI (`ci.yml`) runs lint, backend build, frontend typecheck, tests on Node 20 and 22, and a production audit that fails only on critical advisories.
-2. On success, `deploy.yml` builds `dist`, `frontend/dist`, and the lockfile into `nexus-<sha>.deploy.tar.gz`.
+1. On push to main, `deploy.yml` first calls CI (`ci.yml`), which runs lint, backend build, frontend typecheck, tests on Node 20 and 22, and a production audit that fails only on critical advisories.
+2. On success, the deploy job builds `dist`, `frontend/dist`, and the lockfile into `nexus-<sha>.deploy.tar.gz`.
 3. The script on the server takes a `pg_dump` into the deploy user's home directory, installs with `pnpm install --frozen-lockfile`, swaps directories, restarts, and checks that the service is active, has not crash-looped, and answers HTTP on its port.
 4. On failure it rolls back to the previous directory and keeps the failed copy as `<dir>.failed-<timestamp>`.
 

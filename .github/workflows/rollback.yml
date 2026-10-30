@@ -22,7 +22,6 @@ jobs:
     name: Roll back production
     if: inputs.confirm == 'ROLLBACK'
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: actions/checkout@v4
 
