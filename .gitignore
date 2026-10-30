@@ -39,3 +39,8 @@ temp-test-config/
 *.credentials.key.*.tmp
 
 .workbuddy
+
+# deploy-time secrets and artifacts (never commit)
+*.pem
+*.deploy.tar.gz
+*.dump
