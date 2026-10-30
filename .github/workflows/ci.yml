@@ -2,8 +2,7 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_call:
 
 permissions:
   contents: read
@@ -13,8 +12,8 @@ jobs:
     name: Checks (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     concurrency:
-      group: ci-${{ github.ref }}
-      cancel-in-progress: true
+      group: ci-checks-${{ github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
         node-version: [20.x, 22.x]
@@ -50,8 +49,8 @@ jobs:
     name: Dependency audit (fails on critical only)
     runs-on: ubuntu-latest
     concurrency:
-      group: ci-audit-${{ github.ref }}
-      cancel-in-progress: true
+      group: ci-audit-${{ github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -65,71 +64,3 @@ jobs:
       # Policy: critical blocks the pipeline. High and below are reported in the
       # audit report and handled by taking the next upstream release.
       - run: pnpm audit --prod --audit-level=critical
-
-  deploy:
-    name: Deploy to production
-    needs: [checks, audit]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment: production
-    concurrency:
-      group: deploy-production
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-
-      - run: corepack enable
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-
-      - name: Package deploy bundle
-        run: |
-          SHA=$(git rev-parse --short HEAD)
-          echo "BUNDLE=nexus-${SHA}.deploy.tar.gz" >> "$GITHUB_ENV"
-          tar czf "nexus-${SHA}.deploy.tar.gz" \
-            dist frontend/dist locales bin patches servers.json \
-            package.json pnpm-lock.yaml pnpm-workspace.yaml .pnpmfile.cjs
-
-      - name: Check deploy secrets are present
-        env:
-          S_HOST: ${{ secrets.DEPLOY_HOST }}
-          S_USER: ${{ secrets.DEPLOY_USER }}
-          S_SVC: ${{ secrets.NEXUS_SERVICE }}
-          S_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          S_KH: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-        run: |
-          bad=0
-          for v in S_HOST S_USER S_SVC S_KEY S_KH; do
-            if [ -z "${!v}" ]; then echo "EMPTY: $v (secret not received by this job)" >&2; bad=1; fi
-          done
-          echo "host length=${#S_HOST} user length=${#S_USER} service=${S_SVC:-<empty>}"
-          exit $bad
-
-      - name: Prepare SSH
-        env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-        run: |
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-      - name: Upload bundle and deploy script
-        env:
-          TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
-        run: |
-          KH="$HOME/.ssh/known_hosts"; KEY="$HOME/.ssh/deploy_key"
-          ssh -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes "$TARGET" 'mkdir -p ~/nexus-deploy'
-          scp -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes "$BUNDLE" deploy/deploy-nexus.sh "$TARGET:~/nexus-deploy/"
-
-      - name: Run deploy on server
-        env:
-          TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
-          NEXUS_SERVICE: ${{ secrets.NEXUS_SERVICE }}
-        run: |
-          ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes \
-            "$TARGET" "cd ~/nexus-deploy && AUTO_YES=1 bash deploy-nexus.sh '$BUNDLE' '$NEXUS_SERVICE'"
