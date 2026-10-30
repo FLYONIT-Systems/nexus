@@ -102,7 +102,7 @@
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@mdx-js/mdx": "^3.1.1",
-    "@modelcontextprotocol/sdk-v1": "npm:@modelcontextprotocol/sdk@1.29.0",
+    "@modelcontextprotocol/sdk-v1": "npm:@modelcontextprotocol/sdk@^1.32.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-slot": "^1.2.3",
     "@shadcn/ui": "^0.0.4",
@@ -163,7 +163,7 @@
   "pnpm": {
     "overrides": {
       "@hono/node-server": "^1.19.17",
-      "follow-redirects": "1.16.0",
+      "follow-redirects": "1.16.1",
       "@babel/core": "7.29.6",
       "@protobufjs/utf8": "1.1.1",
       "fast-uri": "^3.1.8",
@@ -172,8 +172,8 @@
       "protobufjs": "^7.6.5",
       "shell-quote": "^1.9.0",
       "ws": "8.21.0",
-      "body-parser@<2": "^1.20.6",
-      "body-parser@>=2": "^2.3.0",
+      "body-parser@<2": "^1.20.9",
+      "body-parser@>=2": "^2.4.0",
       "brace-expansion@>=1 <2": "^1.1.21",
       "brace-expansion@2.0.1": "2.0.2",
       "brace-expansion@>=4 <6": "^5.0.12",
@@ -201,7 +201,15 @@
       "qs": "6.16.0",
       "rollup": "4.59.0",
       "tar@7.5.10": "7.5.13",
-      "uuid": "14.0.0"
+      "uuid": "14.0.0",
+      "proxy-addr": "^2.0.8",
+      "undici": "^7.30.1",
+      "zod": "^4.6.6",
+      "multer": "^2.5.0",
+      "better-auth": "^1.7.7",
+      "@modelcontextprotocol/server": "^2.3.0",
+      "@modelcontextprotocol/server-legacy": "^2.3.1",
+      "@modelcontextprotocol/sdk": "^1.32.0"
     },
     "ignoredBuiltDependencies": [
       "@swc/core",
