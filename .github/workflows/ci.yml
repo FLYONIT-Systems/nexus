@@ -37,8 +37,9 @@ jobs:
           set -u
           bad=0
           if git ls-files | grep -E '(\.pem$|(^|/)\.env$)'; then echo "Key or env file is tracked." >&2; bad=1; fi
+          # examples/oauth-server-config.json is upstream's sample config (not a credential); allowlisted by exact path.
           if git grep -nIE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' ; then echo "Private key material found." >&2; bad=1; fi
-          if git grep -nIE -- '\$2[aby]\$[0-9]{2}\$[./A-Za-z0-9]{53}' ; then echo "bcrypt hash found in tracked file." >&2; bad=1; fi
+          if git grep -nIE -- '\$2[aby]\$[0-9]{2}\$[./A-Za-z0-9]{53}' -- . ':(exclude)examples/oauth-server-config.json' ; then echo "bcrypt hash found in tracked file." >&2; bad=1; fi
           exit $bad
 
       - run: pnpm lint
