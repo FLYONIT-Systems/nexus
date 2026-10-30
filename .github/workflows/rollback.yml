@@ -40,6 +40,6 @@ jobs:
           TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
           NEXUS_SERVICE: ${{ secrets.NEXUS_SERVICE }}
         run: |
-          SSH="ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
-          scp -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts deploy/rollback-nexus.sh "$TARGET:~/nexus-deploy/"
-          $SSH "$TARGET" "cd ~/nexus-deploy && bash rollback-nexus.sh '$NEXUS_SERVICE'"
+          KH="$HOME/.ssh/known_hosts"; KEY="$HOME/.ssh/deploy_key"
+          scp -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes deploy/rollback-nexus.sh "$TARGET:~/nexus-deploy/"
+          ssh -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes "$TARGET" "cd ~/nexus-deploy && bash rollback-nexus.sh '$NEXUS_SERVICE'"

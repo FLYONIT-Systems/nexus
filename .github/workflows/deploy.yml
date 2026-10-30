@@ -44,6 +44,21 @@ jobs:
             dist frontend/dist locales bin patches servers.json \
             package.json pnpm-lock.yaml pnpm-workspace.yaml .pnpmfile.cjs
 
+      - name: Check deploy secrets are present
+        env:
+          S_HOST: ${{ secrets.DEPLOY_HOST }}
+          S_USER: ${{ secrets.DEPLOY_USER }}
+          S_SVC: ${{ secrets.NEXUS_SERVICE }}
+          S_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          S_KH: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          bad=0
+          for v in S_HOST S_USER S_SVC S_KEY S_KH; do
+            if [ -z "${!v}" ]; then echo "EMPTY: $v (secret not received by this job)" >&2; bad=1; fi
+          done
+          echo "host length=${#S_HOST} user length=${#S_USER} service=${S_SVC:-<empty>}"
+          exit $bad
+
       - name: Prepare SSH
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -57,10 +72,9 @@ jobs:
         env:
           TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
         run: |
-          SSH="ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
-          $SSH "$TARGET" 'mkdir -p ~/nexus-deploy'
-          scp -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts \
-            "$BUNDLE" deploy/deploy-nexus.sh "$TARGET:~/nexus-deploy/"
+          KH="$HOME/.ssh/known_hosts"; KEY="$HOME/.ssh/deploy_key"
+          ssh -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes "$TARGET" 'mkdir -p ~/nexus-deploy'
+          scp -i "$KEY" -o UserKnownHostsFile="$KH" -o StrictHostKeyChecking=yes "$BUNDLE" deploy/deploy-nexus.sh "$TARGET:~/nexus-deploy/"
 
       - name: Run deploy on server
         env:
