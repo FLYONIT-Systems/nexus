@@ -1,7 +1,7 @@
 name: Deploy production
 
 # On every push to main: run the CI workflow (ci.yml) as a required gate, then deploy.
-# The deploy job references environment: production, so environment secrets are available to it.
+# Deploy credentials are repository secrets. Environment secrets are not available in private repos on GitHub Free.
 
 on:
   push:
@@ -18,7 +18,6 @@ jobs:
     name: Deploy to production
     needs: checks
     runs-on: ubuntu-latest
-    environment: production
     concurrency:
       group: deploy-production
       cancel-in-progress: false
