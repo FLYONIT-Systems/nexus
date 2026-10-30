@@ -12,7 +12,7 @@ jobs:
     name: Checks (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     concurrency:
-      group: ci-checks-${{ github.event.pull_request.number || github.run_id }}
+      group: ci-checks-${{ github.event.pull_request.number || github.run_id }}-node${{ matrix.node-version }}
       cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
